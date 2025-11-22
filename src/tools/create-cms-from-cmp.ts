@@ -8,11 +8,8 @@ interface ContentParameters {
 async function createContent(parameters: ContentParameters) {
   const { title } = parameters;
 
-  let cmpToken = null;
-
-
+    let cmpToken = null;
     async function getCMPToken(){
-        let cmpToken = null;
 
         try {
             const response = await fetch("https://accounts.cmp.optimizely.com/o/oauth2/v1/token", {
