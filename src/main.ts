@@ -24,6 +24,8 @@ app.use((req, res, next) => {
 const toolsService = new ToolsService(app);
 
 // Import tools
+import "./tools/create-cms-from-cmp";
+
 import "./tools/api-call";
 import "./tools/greeting";
 import "./tools/rick-roll";
@@ -31,12 +33,6 @@ import "./tools/sqlite-query";
 import "./tools/todays-date";
 
 
-function helloWorld(){
-      console.log("Hello, World!");
-    }
-    helloWorld();
-
-    
 // Export the Express app for serverless environments
 export { app };
 
