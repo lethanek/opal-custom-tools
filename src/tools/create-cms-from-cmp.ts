@@ -1,6 +1,15 @@
 import { tool, ParameterType } from "@optimizely-opal/opal-tools-sdk";
 
-async function createContent() {
+interface ContentParameters {
+    task_id: string;
+    step_id: string;
+    substep_id: string;
+    cms_url: string;
+}
+
+
+async function createContent(parameters: ContentParameters) {
+  const { task_id, step_id, substep_id, cms_url } = parameters;
 
     // get the cmp token
     let cmpToken = null;
@@ -74,5 +83,30 @@ tool({
   name: "create_cms_from_cmp",
   description:
     "Gets content from a CMP and creates a CMS entry",
-  parameters: [],
+  parameters: [
+     {
+      name: "task_id",
+      type: ParameterType.String,
+      description: "ID of the task",
+      required: true,
+    },
+     {
+      name: "step_id",
+      type: ParameterType.String,
+      description: "Step ID of the task",
+      required: true,
+    },
+     {
+      name: "substep_id",
+      type: ParameterType.String,
+      description: "Substep ID of the task",
+      required: true,
+    },
+     {
+      name: "cms_url",
+      type: ParameterType.String,
+      description: "URL of the CMS",
+      required: true,
+    }
+  ],
 })(createContent);
