@@ -39,8 +39,12 @@ if (process.env.NODE_ENV !== 'production' || process.env.NETLIFY !== 'true') {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`Discovery endpoint: http://localhost:${PORT}/discovery`);
+    
+
+    function helloWorld(){
+      console.log("Hello, World!");
+    }
+    helloWorld();
+
   });
 }
-
-
-console.log("Tools service initialized.");
