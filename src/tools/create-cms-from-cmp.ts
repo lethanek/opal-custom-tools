@@ -12,7 +12,7 @@ async function createContent(parameters: ContentParameters) {
 
 
     async function getCMPToken(){
-        let token = null;
+        let cmpToken = null;
 
         try {
             const response = await fetch("https://accounts.cmp.optimizely.com/o/oauth2/v1/token", {
