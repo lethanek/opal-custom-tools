@@ -41,3 +41,6 @@ if (process.env.NODE_ENV !== 'production' || process.env.NETLIFY !== 'true') {
     console.log(`Discovery endpoint: http://localhost:${PORT}/discovery`);
   });
 }
+
+
+console.log("Tools service initialized.");
