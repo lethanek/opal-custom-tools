@@ -1,14 +1,14 @@
 import { tool, ParameterType } from "@optimizely-opal/opal-tools-sdk";
 
 interface ContentParameters {
-  title: string;
+  contentTitle: string;
 }
 
 async function createContent(parameters: ContentParameters) {
-  const { title } = parameters;
+  const { contentTitle } = parameters;
 
   let content: string;
-  content = "hello world"
+  content = "hello world" + contentTitle
 
   return {
     content
