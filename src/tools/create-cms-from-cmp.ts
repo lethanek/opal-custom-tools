@@ -8,6 +8,9 @@ interface ContentParameters {
 async function createContent(parameters: ContentParameters) {
   const { title } = parameters;
 
+  let cmpToken = null;
+
+
     async function getCMPToken(){
         let token = null;
 
@@ -31,8 +34,7 @@ async function createContent(parameters: ContentParameters) {
             const data = await response.json();
             
             if (data.access_token) {
-                token = data.access_token;
-                return token
+                cmpToken = data.access_token;
             } else {
                 throw new Error("No access token received");
             }
@@ -42,10 +44,10 @@ async function createContent(parameters: ContentParameters) {
 
         
     }
-    let cmpToken = getCMPToken();
+    getCMPToken();
 
   let content: string;
-  content = "hello world" + cmpToken
+  content = "hello world " + cmpToken
 
 
 
