@@ -32,6 +32,7 @@ async function createContent(parameters: ContentParameters) {
             
             if (data.access_token) {
                 cmpToken = data.access_token;
+                return data.access_token;
             } else {
                 throw new Error("No access token received");
             }
