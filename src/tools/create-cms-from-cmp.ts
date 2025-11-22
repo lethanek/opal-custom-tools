@@ -7,8 +7,11 @@ interface ContentParameters {
 async function createContent(parameters: ContentParameters) {
   const { title } = parameters;
 
+  let content: string;
+  content = "hello world"
+
   return {
-    title
+    content
   };
 }
 
