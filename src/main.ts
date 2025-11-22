@@ -30,6 +30,13 @@ import "./tools/rick-roll";
 import "./tools/sqlite-query";
 import "./tools/todays-date";
 
+
+function helloWorld(){
+      console.log("Hello, World!");
+    }
+    helloWorld();
+
+    
 // Export the Express app for serverless environments
 export { app };
 
@@ -39,12 +46,7 @@ if (process.env.NODE_ENV !== 'production' || process.env.NETLIFY !== 'true') {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log(`Discovery endpoint: http://localhost:${PORT}/discovery`);
-    
 
-    function helloWorld(){
-      console.log("Hello, World!");
-    }
-    helloWorld();
 
   });
 }
