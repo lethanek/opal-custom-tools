@@ -8,7 +8,7 @@ interface ContentParameters {
 async function createContent(parameters: ContentParameters) {
   const { title } = parameters;
 
-    async function getCMPToken(): Promise<string> {
+    async function getCMPToken(){
         let token = null;
 
         try {
@@ -39,7 +39,7 @@ async function createContent(parameters: ContentParameters) {
             console.error("Error fetching token:", error);
         }
 
-    return token
+        return token
     }
     let cmpToken = getCMPToken();
 
