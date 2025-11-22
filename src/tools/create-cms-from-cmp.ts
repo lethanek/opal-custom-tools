@@ -1,15 +1,6 @@
 import { tool, ParameterType } from "@optimizely-opal/opal-tools-sdk";
 
-interface ContentParameters {
-    task_id: string;
-    step_id: string;
-    substep_id: string;
-    cms_url: string;
-}
-
-
-async function createContent(parameters: ContentParameters) {
-  const { task_id, step_id, substep_id, cms_url } = parameters;
+async function createContent() {
 
     // get the cmp token
     let cmpToken = null;
