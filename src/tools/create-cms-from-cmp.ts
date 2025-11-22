@@ -32,6 +32,7 @@ async function createContent(parameters: ContentParameters) {
             
             if (data.access_token) {
                 token = data.access_token;
+                return token
             } else {
                 throw new Error("No access token received");
             }
@@ -39,7 +40,7 @@ async function createContent(parameters: ContentParameters) {
             console.error("Error fetching token:", error);
         }
 
-        return token
+        
     }
     let cmpToken = getCMPToken();
 
