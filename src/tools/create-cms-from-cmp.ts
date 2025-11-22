@@ -18,8 +18,8 @@ async function createContent(parameters: ContentParameters) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                     "client_id": "306dd5df-dbee-4fc1-9ad8-5f8a43f4ddba",
-                    "client_secret": "4b50020271b2b34bd18e2757f8f1ea37afa03244fd579de4064355d29eb6fb10",
+                     "client_id": "c3299596-7176-4360-84a3-c8871bd85f7b",
+                    "client_secret": "67600fb515df373c1e195826a94ee9303d78a178f8b78363125ee1d143586c02",
                     "grant_type": "client_credentials"
                 })
             });
