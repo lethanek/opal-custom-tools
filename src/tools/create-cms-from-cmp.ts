@@ -123,7 +123,7 @@ async function createContent(parameters: ContentParameters) {
 
         const data = await response.json();
         
-        if (data.routeSegment) {
+        if (data) {
     
             const response = await fetch(`https://api.cms.https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/​external-work.com/preview3/experimental/content`, {
                 method: "PATCH",
@@ -132,7 +132,7 @@ async function createContent(parameters: ContentParameters) {
                     "Authorization": `Bearer ${cmpToken}`
                 },
                 body: JSON.stringify({
-                    "title":"[[title]]",
+                    "title":`${cmpTitle}`,
                     "status":"Complete",
                     "url":`https://cms.optimizely.com/content/${data.routeSegment}`
                 })
