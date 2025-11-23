@@ -137,14 +137,6 @@ async function createContent(parameters: ContentParameters) {
                     "url":`https://cms.optimizely.com/content/${data.routeSegment}`
                 })
             });
-
-            const updateStep = await updateTask.json();
-        
-            if (updateStep) {
-                return "Content Created Successfully";
-            } else {
-                throw new Error("could not update CMP step with CMS URL");
-            }
         } 
     }
     //await getCMPContent(cmpToken!);
