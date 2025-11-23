@@ -85,7 +85,7 @@ async function createContent(parameters: ContentParameters) {
                 cmpHtml: data.data.content.html
             }
 
-            await createCMSContent(cmsToken!, cmpContent.cmpTitle, cmpContent.cmpHtml);
+            await createCMSContent(cmpToken!, cmsToken!, cmpContent.cmpTitle, cmpContent.cmpHtml);
             return cmpContent
         } else {
             throw new Error("No access token received");
