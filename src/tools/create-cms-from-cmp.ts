@@ -149,8 +149,11 @@ async function createContent(parameters: ContentParameters) {
     //await getCMPContent(cmpToken!);
 
 
+
+  content = "Content Created Successfully";
+
   return {
-    message: "Content created successfully"
+    content
   };
 }
 
