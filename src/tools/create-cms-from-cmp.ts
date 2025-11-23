@@ -1,4 +1,5 @@
 import { tool, ParameterType } from "@optimizely-opal/opal-tools-sdk";
+import crypto from "node:crypto";
 
 interface ContentParameters {
     task_id: string;
