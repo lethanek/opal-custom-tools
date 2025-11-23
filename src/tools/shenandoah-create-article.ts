@@ -21,8 +21,8 @@ async function createContent(parameters: ContentParameters) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "client_id": "c3299596-7176-4360-84a3-c8871bd85f7b",
-                "client_secret": "67600fb515df373c1e195826a94ee9303d78a178f8b78363125ee1d143586c02",
+                "client_id": "306dd5df-dbee-4fc1-9ad8-5f8a43f4ddba",
+                "client_secret": "4b50020271b2b34bd18e2757f8f1ea37afa03244fd579de4064355d29eb6fb10",
                 "grant_type": "client_credentials"
             })
         });
@@ -65,10 +65,10 @@ async function createContent(parameters: ContentParameters) {
     }
     await getCMSToken();
 
-    //get the article content from the cmp
+    //get the content from the cmp
     let cmpTitle = null;
     let cmpHtml = null;
-    async function getCMPArticleContent(cmpToken: string){
+    async function getCMPContent(cmpToken: string){
        const response = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/assets`, {
             method: "GET",
             headers: {
@@ -91,52 +91,7 @@ async function createContent(parameters: ContentParameters) {
             throw new Error("Could not get CMP content");
         }
     }
-    //await getCMPArticleContent(cmpToken!);
-
-
-//get the structured content from the cmp
-    // let cmpTitle = null;
-    // let cmpHtml = null;
-    async function getCMPStructuredContent(cmpToken: string){
-       const response = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/assets`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${cmpToken}`
-            }
-        });
-
-        const data = await response.json();
-        
-        if (data) {
-    
-            let structuredContentItemUrl = data.data[0].content.value;
-            const fetchStructuredContent = await fetch(`${structuredContentItemUrl}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cmpToken}`
-                }
-            });
-            
-            const structuredContent = await fetchStructuredContent.json();
-
-            if(structuredContent){
-                let scTitle = data.latest_fields_version.fields.title[0].field_values[0].text_value;
-                let scHtml = data.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
-
-                await createCMSContent(cmpToken!, cmsToken!, scTitle, scHtml);
-            
-                return data;
-            }
-
-            
-        } else {
-            throw new Error("Could not get CMP content");
-        }
-    }
-    await getCMPStructuredContent(cmpToken!);
-
+    await getCMPContent(cmpToken!);
 
     // create the cms entry
     async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string){
@@ -178,7 +133,7 @@ async function createContent(parameters: ContentParameters) {
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
                     "status":"Complete",
-                    "url":`https://cms.optimizely.com/content/${data.routeSegment}`
+                    "url":`https://shenandoahu.netlify.app/articles/${data.routeSegment}`
                 })
             });
         } else {
@@ -199,7 +154,7 @@ async function createContent(parameters: ContentParameters) {
 
 
 tool({
-  name: "create_cms_from_cmp",
+  name: "shenandoah_create_article",
   description:
     "Gets content from a CMP and creates a CMS entry",
   parameters: [
