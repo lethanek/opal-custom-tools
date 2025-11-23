@@ -122,9 +122,7 @@ async function createContent(parameters: ContentParameters) {
 
         const data = await response.json();
 
-        throw new Error(data.cmpToken);
-        
-        if (data) {
+        if (data.routeSegment) {
             
             const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/​external-work`, {
                 method: "PATCH",
@@ -138,7 +136,9 @@ async function createContent(parameters: ContentParameters) {
                     "url":`https://cms.optimizely.com/content/${data.routeSegment}`
                 })
             });
-        } 
+        } else {
+            throw new Error("didn't return routeSegment");
+        }
     }
     //await getCMPContent(cmpToken!);
 
