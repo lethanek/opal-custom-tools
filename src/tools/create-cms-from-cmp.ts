@@ -78,7 +78,7 @@ async function createContent(parameters: ContentParameters) {
 
         const data = await response.json();
         
-        if (data.access_token) {
+        if (data) {
     
             cmpContent = {
                 cmpTitle: data.data.title,
@@ -143,7 +143,7 @@ async function createContent(parameters: ContentParameters) {
             if (data) {
                 return "Content Created Successfully";
             } else {
-                throw new Error("could not create CMS content");
+                throw new Error("could not update CMP step with CMS URL");
             }
         } 
     }
