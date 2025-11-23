@@ -81,8 +81,8 @@ async function createContent(parameters: ContentParameters) {
         
         if (data) {
     
-            cmpTitle = data.data.title;
-            cmpHtml = data.data.content.value;
+            cmpTitle = data.data[0].title;
+            cmpHtml = data.data[0].content.value;
 
             await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml);
             
