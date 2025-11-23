@@ -147,6 +147,11 @@ async function createContent(parameters: ContentParameters) {
         } 
     }
     //await getCMPContent(cmpToken!);
+
+
+  return {
+    "Content created successfully";
+  };
 }
 
 
