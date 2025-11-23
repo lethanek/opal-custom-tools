@@ -25,6 +25,7 @@ const toolsService = new ToolsService(app);
 
 // Import tools
 import "./tools/create-cms-from-cmp";
+import "./tools/shenandoah-create-article";
 
 import "./tools/api-call";
 import "./tools/greeting";
