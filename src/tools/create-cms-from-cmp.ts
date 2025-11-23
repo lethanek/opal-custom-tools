@@ -66,8 +66,8 @@ async function createContent(parameters: ContentParameters) {
     await getCMSToken();
 
     //get the article content from the cmp
-    let cmpTitle = null;
-    let cmpHtml = null;
+    //let cmpTitle = null;
+    //let cmpHtml = null;
     async function getCMPArticleContent(cmpToken: string){
        const response = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/assets`, {
             method: "GET",
@@ -95,8 +95,8 @@ async function createContent(parameters: ContentParameters) {
 
 
 //get the structured content from the cmp
-    // let cmpTitle = null;
-    // let cmpHtml = null;
+    let cmpTitle = null;
+    let cmpHtml = null;
     async function getCMPStructuredContent(cmpToken: string){
        const response = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/assets`, {
             method: "GET",
@@ -122,10 +122,10 @@ async function createContent(parameters: ContentParameters) {
             const structuredContent = await fetchStructuredContent.json();
 
             if(structuredContent){
-                let scTitle = data.latest_fields_version.fields.title[0].field_values[0].text_value;
-                let scHtml = data.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
+                let cmpTitle = data.latest_fields_version.fields.title[0].field_values[0].text_value;
+                let cmpHtml = data.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
 
-                await createCMSContent(cmpToken!, cmsToken!, scTitle, scHtml);
+                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml);
             
                 return data;
             }
