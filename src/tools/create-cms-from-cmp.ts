@@ -132,7 +132,7 @@ async function createContent(parameters: ContentParameters) {
                 },
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
-                    "status":"Complete 1",
+                    "status":"Complete",
                     "url":`https://cms.optimizely.com/content/${data.routeSegment}`
                 })
             });
