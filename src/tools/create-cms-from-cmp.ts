@@ -5,7 +5,6 @@ interface ContentParameters {
     task_id: string;
     step_id: string;
     substep_id: string;
-    cms_url: string;
 }
 
 
