@@ -94,7 +94,7 @@ async function createContent(parameters: ContentParameters) {
     await getCMPContent(cmpToken!);
 
     // create the cms entry
-    async function createCMSContent(cmpToken: string,cmsToken: string, cmpTitle: string, cmpHtml: string){
+    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string){
        const response = await fetch(`https://api.cms.optimizely.com/preview3/experimental/content`, {
             method: "POST",
             headers: {
@@ -124,7 +124,7 @@ async function createContent(parameters: ContentParameters) {
         
         if (data) {
     
-            await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/​external-work`, {
+            fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/​external-work`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
