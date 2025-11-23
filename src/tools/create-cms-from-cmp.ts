@@ -33,7 +33,7 @@ async function createContent(parameters: ContentParameters) {
             cmpToken = data.access_token;
             return data.access_token;
         } else {
-            throw new Error("No access token received");
+            throw new Error("No CMP access token received");
         }
     }
     await getCMPToken();
@@ -60,7 +60,7 @@ async function createContent(parameters: ContentParameters) {
             cmsToken = data.access_token;
             return data.access_token;
         } else {
-            throw new Error("No access token received");
+            throw new Error("No CMS access token received");
         }
     }
     await getCMSToken();
@@ -86,9 +86,10 @@ async function createContent(parameters: ContentParameters) {
             }
 
             await createCMSContent(cmpToken!, cmsToken!, cmpContent.cmpTitle, cmpContent.cmpHtml);
+            
             return cmpContent
         } else {
-            throw new Error("No access token received");
+            throw new Error("Could not get CMP content");
         }
     }
     await getCMPContent(cmpToken!);
@@ -142,7 +143,7 @@ async function createContent(parameters: ContentParameters) {
             if (data) {
                 return "Content Created Successfully";
             } else {
-                throw new Error("No access token received");
+                throw new Error("could not create CMS content");
             }
         } 
     }
