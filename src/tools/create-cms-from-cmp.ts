@@ -66,7 +66,8 @@ async function createContent(parameters: ContentParameters) {
     await getCMSToken();
 
     //get the content from the cmp
-    let cmpContent = null;
+    let cmpTitle = null;
+    let cmpHtml = null;
     async function getCMPContent(cmpToken: string){
        const response = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/assets`, {
             method: "GET",
@@ -80,14 +81,12 @@ async function createContent(parameters: ContentParameters) {
         
         if (data) {
     
-            cmpContent = {
-                cmpTitle: data.data.title,
-                cmpHtml: data.data.content.html
-            }
+            cmpTitle = data.data.title;
+            cmpHtml = data.data.content.html;
 
-            await createCMSContent(cmpToken!, cmsToken!, cmpContent.cmpTitle, cmpContent.cmpHtml);
+            await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml);
             
-            return cmpContent
+            return data;
         } else {
             throw new Error("Could not get CMP content");
         }
