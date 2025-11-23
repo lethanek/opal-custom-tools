@@ -9,7 +9,7 @@ interface ContentParameters {
 
 
 async function createContent(parameters: ContentParameters) {
-  const { task_id, step_id, substep_id, cms_url } = parameters;
+  const { task_id, step_id, substep_id } = parameters;
   let content: string;
 
     // get the cmp token
