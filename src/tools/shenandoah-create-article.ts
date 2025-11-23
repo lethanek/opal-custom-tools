@@ -8,7 +8,7 @@ interface ContentParameters {
 }
 
 
-async function createContent(parameters: ContentParameters) {
+async function createArticle(parameters: ContentParameters) {
   const { task_id, step_id, substep_id } = parameters;
   let content: string;
 
@@ -205,9 +205,9 @@ async function createContent(parameters: ContentParameters) {
 
 
 tool({
-  name: "create_cms_from_cmp",
+  name: "shenandoah-create-article",
   description:
-    "Gets content from a CMP and creates a CMS entry",
+    "Gets content from a CMP task and creates an article in Shenandoah CMS.",
   parameters: [
      {
       name: "task_id",
@@ -228,4 +228,4 @@ tool({
       required: true,
     }
   ],
-})(createContent);
+})(createArticle);
