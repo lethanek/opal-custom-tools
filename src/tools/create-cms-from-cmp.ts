@@ -140,7 +140,7 @@ async function createContent(parameters: ContentParameters) {
 
             const updateStep = await response.json();
         
-            if (data) {
+            if (updateStep) {
                 return "Content Created Successfully";
             } else {
                 throw new Error("could not update CMP step with CMS URL");
