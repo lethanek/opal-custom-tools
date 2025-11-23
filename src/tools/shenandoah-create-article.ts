@@ -48,9 +48,9 @@ async function createContent(parameters: ContentParameters) {
             },
             body: JSON.stringify({
                 "grant_type": "client_credentials",
-                "client_id": "64cf088b82e44b3e859fc9be19ac025f",   
-                "client_secret": "ozbayC0QsoAeqLYC5tfBfTsfbLHLrIGPk5SEBWaTiYLoiEHe",
-                "act_as": "dan.oneil@optimizely.com" 
+                "client_id": "1fad7c59f238426eae414c199288e00a",   
+                "client_secret": "D0igxjKyxyOHNbvJOqRZ1ssJSIyg2DJWYiL2Vs3G2zIrymjL",
+                "act_as": "dan.oneil@optimizely.com"
             })
         });
 
@@ -65,10 +65,10 @@ async function createContent(parameters: ContentParameters) {
     }
     await getCMSToken();
 
-    //get the content from the cmp
-    let cmpTitle = null;
-    let cmpHtml = null;
-    async function getCMPContent(cmpToken: string){
+    //get the article content from the cmp
+    //let cmpTitle = null;
+    //let cmpHtml = null;
+    async function getCMPArticleContent(cmpToken: string){
        const response = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/assets`, {
             method: "GET",
             headers: {
@@ -91,10 +91,59 @@ async function createContent(parameters: ContentParameters) {
             throw new Error("Could not get CMP content");
         }
     }
-    await getCMPContent(cmpToken!);
+    //await getCMPArticleContent(cmpToken!);
+
+
+//get the structured content from the cmp
+    let cmpTitle = null;
+    let cmpHtml = null;
+    let cmpMetaTitle = null;
+    let cmpMetaDescription = null;
+    async function getCMPStructuredContent(cmpToken: string){
+       const response = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/assets`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${cmpToken}`
+            }
+        });
+
+        const data = await response.json();
+        
+        if (data) {
+    
+            let structuredContentItemUrl = data.data[0].content.value;
+            const fetchStructuredContent = await fetch(`${structuredContentItemUrl}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${cmpToken}`
+                }
+            });
+            
+            const structuredContent = await fetchStructuredContent.json();
+
+            if(structuredContent){
+                let cmpTitle = structuredContent.latest_fields_version.fields.title[0].field_values[0].text_value;
+                let cmpHtml = structuredContent.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
+                let cmpMetaTitle = structuredContent.latest_fields_version.fields.metaTitle[0].field_values[0].text_value;
+                let cmpMetaDescription = structuredContent.latest_fields_version.fields.metaDescription[0].field_values[0].text_value;
+
+                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription);
+            
+                return data;
+            }
+
+            
+        } else {
+            throw new Error("Could not get CMP content");
+        }
+    }
+    await getCMPStructuredContent(cmpToken!);
+
 
     // create the cms entry
-    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string){
+    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string){
        const response = await fetch(`https://api.cms.optimizely.com/preview3/experimental/content`, {
             method: "POST",
             headers: {
@@ -105,7 +154,7 @@ async function createContent(parameters: ContentParameters) {
                 "key": crypto.randomUUID().replace(/-/g, ""),
                 "contentType": "ArticlePage",
                 "locale": "en",
-                "container": "cfded4a1349441b78cdace9ab584748f",
+                "container": "0636cf53acc343f18db5b0c2444d0683",
                 "status": "draft",
                 "displayName": `${cmpTitle}`,
                 "properties": {
@@ -113,9 +162,11 @@ async function createContent(parameters: ContentParameters) {
                     "SubHeading": "",
                     "Body": `${cmpHtml}`,
                     "SeoSettings": {
-                        "GraphType": "article"
+                        "GraphType": "article",
+                        "MetaDescription": cmpMetaDescription || "",
+                        "MetaTitle": cmpMetaTitle || ""
                     },
-                    "PromoImage": "cms://content/7c187dc65b064a1ba98ffb5f4b9ca61e"
+                    "PromoImage": "cms://content/198243681c3140cba16ed8665e2573f0"
                 }
             })
         });
@@ -154,7 +205,7 @@ async function createContent(parameters: ContentParameters) {
 
 
 tool({
-  name: "shenandoah_create_article",
+  name: "create_cms_from_cmp",
   description:
     "Gets content from a CMP and creates a CMS entry",
   parameters: [
