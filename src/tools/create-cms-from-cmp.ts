@@ -125,7 +125,7 @@ async function createContent(parameters: ContentParameters) {
         
         if (data) {
     
-            const updateTask = await fetch(`https://api.cms.https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/​external-work.com/preview3/experimental/content`, {
+            const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/​external-work`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
