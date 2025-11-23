@@ -173,12 +173,6 @@ tool({
       type: ParameterType.String,
       description: "Substep ID of the task",
       required: true,
-    },
-     {
-      name: "cms_url",
-      type: ParameterType.String,
-      description: "URL of the CMS",
-      required: true,
     }
   ],
 })(createContent);
