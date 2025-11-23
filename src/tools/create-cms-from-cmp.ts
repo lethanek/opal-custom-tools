@@ -122,8 +122,8 @@ async function createContent(parameters: ContentParameters) {
             const structuredContent = await fetchStructuredContent.json();
 
             if(structuredContent){
-                let cmpTitle = data.latest_fields_version.fields.title[0].field_values[0].text_value;
-                let cmpHtml = data.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
+                let cmpTitle = structuredContent.latest_fields_version.fields.title[0].field_values[0].text_value;
+                let cmpHtml = structuredContent.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
 
                 await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml);
             
