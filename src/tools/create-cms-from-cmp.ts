@@ -121,7 +121,9 @@ async function createContent(parameters: ContentParameters) {
         });
 
         const data = await response.json();
-        console.log("CMS Content Created:", data);
+
+        throw new Error(data.cmpToken);
+        
         if (data) {
             
             const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/​external-work`, {
