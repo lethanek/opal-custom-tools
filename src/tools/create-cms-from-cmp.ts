@@ -5,11 +5,16 @@ interface ContentParameters {
     task_id: string;
     step_id: string;
     substep_id: string;
+    cmp_client_id: string;
+    cmp_client_secret: string;
+    cms_client_id: string;
+    cms_client_secret: string;
+    cms_act_as: string;
 }
 
 
 async function createContent(parameters: ContentParameters) {
-  const { task_id, step_id, substep_id } = parameters;
+  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -21,8 +26,8 @@ async function createContent(parameters: ContentParameters) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "client_id": "c3299596-7176-4360-84a3-c8871bd85f7b",
-                "client_secret": "67600fb515df373c1e195826a94ee9303d78a178f8b78363125ee1d143586c02",
+                "client_id": `${cmp_client_id}`,
+                "client_secret": `${cmp_client_secret}`,
                 "grant_type": "client_credentials"
             })
         });
@@ -48,9 +53,9 @@ async function createContent(parameters: ContentParameters) {
             },
             body: JSON.stringify({
                 "grant_type": "client_credentials",
-                "client_id": "64cf088b82e44b3e859fc9be19ac025f",   
-                "client_secret": "ozbayC0QsoAeqLYC5tfBfTsfbLHLrIGPk5SEBWaTiYLoiEHe",
-                "act_as": "dan.oneil@optimizely.com" 
+                "client_id": `${cms_client_id}`,   
+                "client_secret": `${cms_client_secret}`,
+                "act_as": `${cms_act_as}` 
             })
         });
 
