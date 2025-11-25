@@ -231,6 +231,36 @@ tool({
       type: ParameterType.String,
       description: "Substep ID of the task",
       required: true,
+    },
+     {
+      name: "cmp_client_id",
+      type: ParameterType.String,
+      description: "CMP Client ID",
+      required: true,
+    },
+     {
+      name: "cmp_client_secret",
+      type: ParameterType.String,
+      description: "CMP Client Secret",
+      required: true,
+    },
+     {
+      name: "cms_client_id",
+      type: ParameterType.String,
+      description: "CMS Client ID",
+      required: true,
+    },
+     {
+      name: "cms_client_secret",
+      type: ParameterType.String,
+      description: "CMS Client Secret",
+      required: true,
+    },
+     {
+      name: "cms_act_as",
+      type: ParameterType.String,
+      description: "CMS Act As",
+      required: true,
     }
   ],
 })(createContent);
