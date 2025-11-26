@@ -194,6 +194,17 @@ async function createContent(parameters: ContentParameters) {
                     "url":`https://cms.optimizely.com/content/${data.routeSegment}`
                 })
             });
+
+            const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${cmpToken}`
+                },
+                body: JSON.stringify({
+                    "is_completed":true
+                })
+            });
         } else {
             throw new Error("didn't return routeSegment");
         }
