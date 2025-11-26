@@ -191,8 +191,7 @@ async function createContent(parameters: ContentParameters) {
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
                     "status":"Complete",
-                    "url":`https://cms.optimizely.com/content/${data.routeSegment}`,
-                     "is_completed": true
+                    "url":`https://cms.optimizely.com/content/${data.routeSegment}`
                 })
             });
         } else {
