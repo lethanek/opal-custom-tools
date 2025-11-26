@@ -131,10 +131,11 @@ async function createContent(parameters: ContentParameters) {
             if(structuredContent){
                 let cmpTitle = structuredContent.latest_fields_version.fields.title[0].field_values[0].text_value;
                 let cmpHtml = structuredContent.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
+                let cmpAuthor = structuredContent.latest_fields_version.fields.author[0].field_values[0].text_value;
                 let cmpMetaTitle = structuredContent.latest_fields_version.fields.metaTitle[0].field_values[0].text_value;
                 let cmpMetaDescription = structuredContent.latest_fields_version.fields.metaDescription[0].field_values[0].text_value;
 
-                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription);
+                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor);
             
                 return data;
             }
@@ -148,7 +149,7 @@ async function createContent(parameters: ContentParameters) {
 
 
     // create the cms entry
-    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string){
+    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string, cmpAuthor?: string){
        const response = await fetch(`https://api.cms.optimizely.com/preview3/experimental/content`, {
             method: "POST",
             headers: {
@@ -166,6 +167,7 @@ async function createContent(parameters: ContentParameters) {
                     "Heading": `${cmpTitle}`,
                     "SubHeading": "",
                     "Body": `${cmpHtml}`,
+                    "Author": `${cmpAuthor || "Optimizely Author"}`,
                     "SeoSettings": {
                         "GraphType": "article",
                         "MetaDescription": cmpMetaDescription || "",
@@ -189,7 +191,8 @@ async function createContent(parameters: ContentParameters) {
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
                     "status":"Complete",
-                    "url":`https://cms.optimizely.com/content/${data.routeSegment}`
+                    "url":`https://cms.optimizely.com/content/${data.routeSegment}`,
+                     "is_completed": true
                 })
             });
         } else {
