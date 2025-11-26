@@ -131,9 +131,9 @@ async function createContent(parameters: ContentParameters) {
             if(structuredContent){
                 let cmpTitle = structuredContent.latest_fields_version.fields.title[0].field_values[0].text_value;
                 let cmpHtml = structuredContent.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
-                let cmpAuthor = structuredContent.latest_fields_version.fields.author[0].field_values[0].text_value;
-                let cmpMetaTitle = structuredContent.latest_fields_version.fields.metaTitle[0].field_values[0].text_value;
-                let cmpMetaDescription = structuredContent.latest_fields_version.fields.metaDescription[0].field_values[0].text_value;
+                let cmpAuthor = structuredContent?.latest_fields_version?.fields?.author?.[0]?.field_values?.[0]?.text_value ?? "Optimizely Author";                
+                let cmpMetaTitle = structuredContent?.latest_fields_version?.fields?.metaTitle[0]?.field_values[0]?.text_value ?? "";
+                let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
 
                 await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor);
             
