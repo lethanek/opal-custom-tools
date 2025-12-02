@@ -12,11 +12,12 @@ interface ContentParameters {
     cms_act_as: string;
     cms_container: string;
     cms_placeholder_image: string;
+    cms_article_path: string;
 }
 
 
 async function createContent(parameters: ContentParameters) {
-  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image } = parameters; 
+  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image, cms_article_path } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -137,7 +138,7 @@ async function createContent(parameters: ContentParameters) {
                 let cmpMetaTitle = structuredContent?.latest_fields_version?.fields?.metaTitle[0]?.field_values[0]?.text_value ?? "";
                 let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
 
-                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, cms_container, cms_placeholder_image);
+                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, cms_container, cms_placeholder_image, cms_article_path);
             
                 return data;
             }
@@ -151,7 +152,7 @@ async function createContent(parameters: ContentParameters) {
 
 
     // create the cms entry
-    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string, cmpAuthor?: string, cms_container?: string, cms_placeholder_image?: string){
+    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string, cmpAuthor?: string, cms_container?: string, cms_placeholder_image?: string, cms_article_path?: string){
        const response = await fetch(`https://api.cms.optimizely.com/preview3/experimental/content`, {
             method: "POST",
             headers: {
@@ -193,7 +194,7 @@ async function createContent(parameters: ContentParameters) {
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
                     "status":"Complete",
-                    "url":`https://cms.optimizely.com/content/${data.routeSegment}`
+                    "url":`${cms_article_path}${data.routeSegment}`
                 })
             });
 
@@ -287,6 +288,12 @@ tool({
       name: "cms_placeholder_image",
       type: ParameterType.String,
       description: "Placeholder image for the post.",
+      required: true,
+    },
+     {
+      name: "cms_article_path",
+      type: ParameterType.String,
+      description: "URL path for the link for the article.",
       required: true,
     }
   ],
