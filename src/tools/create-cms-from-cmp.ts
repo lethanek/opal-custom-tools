@@ -10,11 +10,13 @@ interface ContentParameters {
     cms_client_id: string;
     cms_client_secret: string;
     cms_act_as: string;
+    cms_container: string;
+    cms_placeholder_image: string;
 }
 
 
 async function createContent(parameters: ContentParameters) {
-  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as } = parameters; 
+  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -135,7 +137,7 @@ async function createContent(parameters: ContentParameters) {
                 let cmpMetaTitle = structuredContent?.latest_fields_version?.fields?.metaTitle[0]?.field_values[0]?.text_value ?? "";
                 let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
 
-                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor);
+                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, cms_container, cms_placeholder_image);
             
                 return data;
             }
@@ -149,7 +151,7 @@ async function createContent(parameters: ContentParameters) {
 
 
     // create the cms entry
-    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string, cmpAuthor?: string){
+    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string, cmpAuthor?: string, cms_container?: string, cms_placeholder_image?: string){
        const response = await fetch(`https://api.cms.optimizely.com/preview3/experimental/content`, {
             method: "POST",
             headers: {
@@ -160,7 +162,7 @@ async function createContent(parameters: ContentParameters) {
                 "key": crypto.randomUUID().replace(/-/g, ""),
                 "contentType": "ArticlePage",
                 "locale": "en",
-                "container": "cfded4a1349441b78cdace9ab584748f",
+                "container": `${cms_container}`,
                 "status": "draft",
                 "displayName": `${cmpTitle}`,
                 "properties": {
@@ -173,7 +175,7 @@ async function createContent(parameters: ContentParameters) {
                         "MetaDescription": cmpMetaDescription || "",
                         "MetaTitle": cmpMetaTitle || ""
                     },
-                    "PromoImage": "cms://content/7c187dc65b064a1ba98ffb5f4b9ca61e"
+                    "PromoImage": `cms://content/${cms_placeholder_image}`
                 }
             })
         });
@@ -273,6 +275,18 @@ tool({
       name: "cms_act_as",
       type: ParameterType.String,
       description: "CMS Act As",
+      required: true,
+    },
+     {
+      name: "cms_container",
+      type: ParameterType.String,
+      description: "Container for the content creation",
+      required: true,
+    },
+     {
+      name: "cms_placeholder_image",
+      type: ParameterType.String,
+      description: "Placeholder image for the post.",
       required: true,
     }
   ],
