@@ -164,7 +164,7 @@ async function createContent(parameters: ContentParameters) {
                 "contentType": "ArticlePage",
                 "locale": "en",
                 "container": `${cms_container}`,
-                "status": "draft",
+                "status": "published",
                 "displayName": `${cmpTitle}`,
                 "properties": {
                     "Heading": `${cmpTitle}`,
