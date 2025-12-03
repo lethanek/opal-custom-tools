@@ -179,7 +179,7 @@ async function createContent(parameters: ContentParameters) {
                     "PromoImage": `cms://content/${cms_placeholder_image}`
                 }
             })
-        });
+        }); 
 
         const data = await response.json();
 
