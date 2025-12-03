@@ -185,6 +185,18 @@ async function createContent(parameters: ContentParameters) {
 
         if (data.routeSegment) {
             
+            const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${cmpToken}`
+                },
+                body: JSON.stringify({
+                    "title":`${cmpTitle}`,
+                    "url":`${cms_article_path}${data.routeSegment}`
+                })
+            });
+            
             const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
                 method: "PATCH",
                 headers: {
@@ -209,17 +221,7 @@ async function createContent(parameters: ContentParameters) {
                 })
             });
 
-            const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cmpToken}`
-                },
-                body: JSON.stringify({
-                    "title":`${cmpTitle}`,
-                    "url":`${cms_article_path}${data.routeSegment}`
-                })
-            });
+            
 
         } else {
             throw new Error("didn't return routeSegment");
