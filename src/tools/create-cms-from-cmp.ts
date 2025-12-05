@@ -192,8 +192,8 @@ async function createContent(parameters: ContentParameters) {
                     "Authorization": `Bearer ${cmpToken}`
                 },
                 body: JSON.stringify({
-                    "title": "`${cmpTitle}`",
-                    "url": "`${cms_article_path}${data.routeSegment}`"
+                    "title": `${cmpTitle}`,
+                    "url":`${cms_article_path}${data.routeSegment}`
                 })
             });
             
