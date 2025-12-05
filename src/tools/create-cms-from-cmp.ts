@@ -17,6 +17,10 @@ interface ContentParameters {
 
 
 async function createContent(parameters: ContentParameters) {
+
+   throw new Error("hello!");
+
+
   const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image, cms_article_path } = parameters; 
   let content: string;
 
@@ -185,23 +189,18 @@ async function createContent(parameters: ContentParameters) {
 
         if (data.routeSegment) {
             
-            try{
-                const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/692750400f30929ce2070cc4/urls`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${cmpToken}`
-                    },
-                    body: JSON.stringify({
-                        "title": "opti",
-                        "url": "https://www.optimizely.com"
-                        // "title": `${cmpTitle}`,
-                        // "url":`${cms_article_path}${data.routeSegment}`
-                    })
-                });
-            } catch(error){
-                throw new Error(`API call failed: ${error instanceof Error ? error.message : String(error)}`);
-            }
+            const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${cmpToken}`
+                },
+                body: JSON.stringify({
+                    "title": `${cmpTitle}`,
+                    "url":`${cms_article_path}${data.routeSegment}`
+                })
+            });
+            
             
             
             const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
