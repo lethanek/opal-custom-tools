@@ -185,17 +185,22 @@ async function createContent(parameters: ContentParameters) {
 
         if (data.routeSegment) {
             
-            const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cmpToken}`
-                },
-                body: JSON.stringify({
-                    "title": `${cmpTitle}`,
-                    "url":`${cms_article_path}${data.routeSegment}`
-                })
-            });
+            try{
+                const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${cmpToken}`
+                    },
+                    body: JSON.stringify({
+                        "title": `${cmpTitle}`,
+                        "url":`${cms_article_path}${data.routeSegment}`
+                    })
+                });
+            } catch(error){
+                throw new Error(`API call failed: ${error instanceof Error ? error.message : String(error)}`);
+            }
+            
             
             const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
                 method: "PATCH",
