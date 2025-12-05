@@ -186,15 +186,17 @@ async function createContent(parameters: ContentParameters) {
         if (data.routeSegment) {
             
             try{
-                const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
+                const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/692750400f30929ce2070cc4/urls`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${cmpToken}`
                     },
                     body: JSON.stringify({
-                        "title": `${cmpTitle}`,
-                        "url":`${cms_article_path}${data.routeSegment}`
+                        "title": "opti",
+                        "url": "https://www.optimizely.com"
+                        // "title": `${cmpTitle}`,
+                        // "url":`${cms_article_path}${data.routeSegment}`
                     })
                 });
             } catch(error){
