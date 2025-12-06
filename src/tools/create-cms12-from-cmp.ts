@@ -150,22 +150,22 @@ async function createContent(parameters: ContentParameters) {
                     "id": 72,
                     "providerName": "string"
                 },
-                "name": "Page Created by opal",
+                "name": `${cmpTitle}`,
                 "status": "Published",
                 "mainBody": {
-                    "value": "<p>yada yada yada</p>",
+                    "value": `${cmpHtml}`,
                     "propertyDataType": "PropertyXhtmlString"
                 },
                 "metaTitle": {
-                    "value": "here is a title",
+                    "value": `${cmpMetaTitle}`,
                     "propertyDataType": "PropertyLongString"
                 },
                 "pageDescription": {
-                    "value": "here is a description",
+                    "value": `${cmpMetaDescription}`,
                     "propertyDataType": "PropertyLongString"
                 },
                 "authorMetaData": {
-                    "value": "daniel o'neil",
+                    "value": `${cmpAuthor}`,
                     "propertyDataType": "PropertyLongString"
                 },
                 "backgroundImage": {
@@ -174,7 +174,7 @@ async function createContent(parameters: ContentParameters) {
                         "workId": 0,
                         "guidValue": "03ec4e9ed2ea11f0b5ceb65847b51fe1",
                         "providerName": "dam",
-                        "url": "https://images2.cmp.optimizely.com/Zz0wM2VjNGU5ZWQyZWExMWYwYjVjZWI2NTg0N2I1MWZlMQ==",
+                        "url": `${cmpImageUrl}`,
                         "expanded": null
                     },
                     "propertyDataType": "PropertyContentReference"
