@@ -192,7 +192,7 @@ async function createContent(parameters: ContentParameters) {
 
         const data = await response.json();
 
-        if (data.routeSegment) {
+        if (data.contentLink.url) {
             
             const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
                 method: "POST",
@@ -202,7 +202,7 @@ async function createContent(parameters: ContentParameters) {
                 },
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
-                    "url":`https://www.yada.com`
+                    "url":`${data.contentLink.url}`
                 })
             });
             
@@ -215,7 +215,7 @@ async function createContent(parameters: ContentParameters) {
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
                     "status":"Complete",
-                    "url":`https://www.yada.com`
+                    "url":`${data.contentLink.url}`
                 })
             });
 
