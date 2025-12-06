@@ -250,9 +250,9 @@ async function createContent(parameters: ContentParameters) {
 
 
 tool({
-  name: "create_cms_from_cmp",
+  name: "create_cms12_from_cmp",
   description:
-    "Gets content from a CMP and creates a CMS entry",
+    "Gets content from a CMP and creates a CMS12 entry",
   parameters: [
      {
       name: "task_id",
