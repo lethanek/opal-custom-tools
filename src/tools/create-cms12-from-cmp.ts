@@ -115,8 +115,14 @@ async function createContent(parameters: ContentParameters) {
                     }
                 });
             
-                const image = await fetchImage.json();
-                let imageUrl = image.url
+                let imageUrl = "https://images3.cmp.optimizely.com/Zz0xODVlNWYxY2QyZmQxMWYwYjU2OGQyMmVjY2FkOWQ3ZQ==";
+                try{
+                    const image = await fetchImage.json();
+                    imageUrl = image.url;
+                } catch(error){
+                    throw new Error(`API call failed: ${error instanceof Error ? error.message : String(error)}`);
+                }
+
 
                 await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);
             
