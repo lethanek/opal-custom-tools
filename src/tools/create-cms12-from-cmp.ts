@@ -107,6 +107,8 @@ async function createContent(parameters: ContentParameters) {
                 let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
                 let cmpImageApi = structuredContent?.latest_fields_version?.fields?.featuredMedia?.[0]?.field_values?.[0]?.links?.self;
 
+throw new Error(`${cmpImageApi}`);
+
                 const fetchImage = await fetch(`${cmpImageApi}`, {
                     method: "GET",
                     headers: {
@@ -116,6 +118,7 @@ async function createContent(parameters: ContentParameters) {
                 });
             
                 const image = await fetchImage.json();
+
                 if(image){
                     let imageUrl = image.url;
                     await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
