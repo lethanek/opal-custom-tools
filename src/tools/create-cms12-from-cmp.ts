@@ -105,7 +105,7 @@ async function createContent(parameters: ContentParameters) {
                 let cmpAuthor = structuredContent?.latest_fields_version?.fields?.author?.[0]?.field_values?.[0]?.text_value ?? "Optimizely Author";                
                 let cmpMetaTitle = structuredContent?.latest_fields_version?.fields?.metaTitle[0]?.field_values[0]?.text_value ?? "";
                 let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
-                let cmpImageApi = structuredContent?.latest_fields_version?.fields?.featuredMedia?.[0]?.field_values?.[0]?.links?.self ?? null;
+                let cmpImageApi = structuredContent?.latest_fields_version?.fields?.featuredMedia?.[0]?.field_values?.[0]?.links?.self;
 
                 const fetchImage = await fetch(`${cmpImageApi}`, {
                     method: "GET",
@@ -116,9 +116,7 @@ async function createContent(parameters: ContentParameters) {
                 });
             
                 const image = await fetchImage.json();
-                let imageUrl = image.url;
-
-                throw new Error(`Image URL not found: ${imageUrl}`);
+                let imageUrl = "https://images3.cmp.optimizely.com/Zz04MWNmMWE3MGEyYTQxMWVmYTg4MWVlZjlhZmY1YzNhMg==";
 
 
                 await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);
