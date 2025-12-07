@@ -116,11 +116,11 @@ async function createContent(parameters: ContentParameters) {
                 });
             
                 const image = await fetchImage.json();
-                let imageUrl = "https://images3.cmp.optimizely.com/Zz04MWNmMWE3MGEyYTQxMWVmYTg4MWVlZjlhZmY1YzNhMg==";
-
-
-                await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);
-            
+                if(image){
+                    let imageUrl = image.url;
+                    await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
+                }
+                        
                 return data;
             }
 
