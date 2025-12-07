@@ -12,7 +12,7 @@ interface ContentParameters {
 
 async function createContent(parameters: ContentParameters) {
   const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms12_url } = parameters; 
-  let content: string;
+  let content = "";
 
     // get the cmp token
     let cmpToken = null;
@@ -107,7 +107,7 @@ async function createContent(parameters: ContentParameters) {
                 let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
                 let cmpImageApi = structuredContent?.latest_fields_version?.fields?.featuredMedia?.[0]?.field_values?.[0]?.links?.self;
 
-throw new Error(`${cmpImageApi}`);
+                content += `Using this for image request: ${cmpImageApi}\n`;
 
                 const fetchImage = await fetch(`${cmpImageApi}`, {
                     method: "GET",
@@ -119,8 +119,11 @@ throw new Error(`${cmpImageApi}`);
             
                 const image = await fetchImage.json();
 
+                content += `Image json: ${JSON.stringify(image)}\n`;
+
                 if(image){
                     let imageUrl = image.url;
+                    content += `Image URL: ${imageUrl}\n`;
                     await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
                 }
                         
