@@ -204,6 +204,10 @@ async function createContent(parameters: ContentParameters) {
                     "value": `${cmpImageUrl}`,
                     "propertyDataType": "PropertyLongString"
                 },
+                "teaserBackgroundExternalUrl": {
+                    "value": `${cmpImageUrl}`,
+                    "propertyDataType": "PropertyLongString"
+                },
                 "backgroundOpacity": {
                     "value": 0.0,
                     "propertyDataType": "PropertyFloatNumber"
