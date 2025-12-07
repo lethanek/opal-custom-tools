@@ -109,23 +109,46 @@ async function createContent(parameters: ContentParameters) {
 
                 content += `Using this for image request: ${cmpImageApi}\n`;
 
-                const fetchImage = await fetch(`${cmpImageApi}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${cmpToken}`
-                    }
-                });
+
+                // const fetchImage = await fetch(`${cmpImageApi}`, {
+                //     method: "GET",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //         "Authorization": `Bearer ${cmpToken}`
+                //     }
+                // });
             
-                const image = await fetchImage.json();
+                // const image = await fetchImage.json();
 
-                content += `Image json: ${JSON.stringify(image)}\n`;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: `Bearer ${cmpToken}`
+                    }
+                };
 
-                if(image){
-                    let imageUrl = image.url;
-                    content += `Image URL: ${imageUrl}\n`;
-                    await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
-                }
+                await fetch(`${cmpImageApi}`, options)
+                    .then(res => res.json())
+                    .then(res => {
+                        content += `Fetched image data: ${JSON.stringify(res)}\n`;
+                        let image = res;
+                        let imageUrl = image.url;
+                        
+                        content += `Image URL: ${imageUrl}\n`;
+                        createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
+                    })
+                    .catch(err => console.error(err));
+
+
+
+                // content += `Image json: ${JSON.stringify(image)}\n`;
+
+                // if(image){
+                //     let imageUrl = image.url;
+                //     content += `Image URL: ${imageUrl}\n`;
+                //     await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
+                // }
                         
                 return data;
             }
