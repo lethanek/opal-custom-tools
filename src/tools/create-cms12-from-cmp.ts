@@ -174,16 +174,9 @@ async function createContent(parameters: ContentParameters) {
                     "value": `${cmpAuthor}`,
                     "propertyDataType": "PropertyLongString"
                 },
-                "backgroundImage": {
-                    "value": {
-                        "id": 1,
-                        "workId": 0,
-                        "guidValue": "03ec4e9ed2ea11f0b5ceb65847b51fe1",
-                        "providerName": "dam",
-                        "url": `${cmpImageUrl}`,
-                        "expanded": null
-                    },
-                    "propertyDataType": "PropertyContentReference"
+                    "backgroundExternalUrl": {
+                        "value": `${cmpImageUrl}`,
+                        "propertyDataType": "PropertyLongString"
                 },
                 "backgroundOpacity": {
                     "value": 0.0,
