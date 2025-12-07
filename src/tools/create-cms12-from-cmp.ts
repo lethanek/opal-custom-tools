@@ -240,7 +240,7 @@ async function createContent(parameters: ContentParameters) {
 
 
 
-  content = "Content Created Successfully";
+  content += "Content Created Successfully";
 
   return {
     content
