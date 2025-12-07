@@ -107,7 +107,7 @@ async function createContent(parameters: ContentParameters) {
                 let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
                 let cmpImageApi = structuredContent?.latest_fields_version?.fields?.featuredMedia?.[0]?.field_values?.[0]?.links?.self;
 
-                content += `Using this for image request: ${cmpImageApi}\n`;
+                content += `Using this for image request: ${cmpImageApi}\n\n`;
 
 
                 // const fetchImage = await fetch(`${cmpImageApi}`, {
@@ -131,11 +131,11 @@ async function createContent(parameters: ContentParameters) {
                 await fetch(`${cmpImageApi}`, options)
                     .then(res => res.json())
                     .then(res => {
-                        content += `Fetched image data: ${JSON.stringify(res)}\n`;
+                        content += `Fetched image data: ${JSON.stringify(res)}\n\n`;
                         let image = res;
                         let imageUrl = image.url;
                         
-                        content += `Image URL: ${imageUrl}\n`;
+                        content += `Image URL: ${imageUrl}\n\n`;
                         createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
                     })
                     .catch(err => console.error(err));
@@ -263,7 +263,7 @@ async function createContent(parameters: ContentParameters) {
 
 
 
-  content += "Content Created Successfully";
+  content += "Content Created Successfully\n\n";
 
   return {
     content
