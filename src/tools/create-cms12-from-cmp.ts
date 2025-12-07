@@ -120,6 +120,7 @@ async function createContent(parameters: ContentParameters) {
             
                 // const image = await fetchImage.json();
 
+                let imageUrl = "";
                 const options = {
                     method: 'GET',
                     headers: {
@@ -133,12 +134,13 @@ async function createContent(parameters: ContentParameters) {
                     .then(res => {
                         content += `Fetched image data: ${JSON.stringify(res)}\n\n`;
                         let image = res;
-                        let imageUrl = image.url;
+                        imageUrl = image.url;
                         
                         content += `Image URL: ${imageUrl}\n\n`;
-                        createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
                     })
                     .catch(err => console.error(err));
+                
+                await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);    
 
 
 
