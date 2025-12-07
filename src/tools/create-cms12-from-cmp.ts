@@ -118,6 +118,8 @@ async function createContent(parameters: ContentParameters) {
                 const image = await fetchImage.json();
                 let imageUrl = image.url;
 
+                throw new Error(`Image URL not found: ${imageUrl}`);
+
 
                 await createCMSContent(cmpToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, imageUrl, cms12_url);
             
@@ -169,9 +171,9 @@ async function createContent(parameters: ContentParameters) {
                     "value": `${cmpAuthor}`,
                     "propertyDataType": "PropertyLongString"
                 },
-                    "backgroundExternalUrl": {
-                        "value": `${cmpImageUrl}`,
-                        "propertyDataType": "PropertyLongString"
+                "backgroundExternalUrl": {
+                    "value": `${cmpImageUrl}`,
+                    "propertyDataType": "PropertyLongString"
                 },
                 "backgroundOpacity": {
                     "value": 0.0,
