@@ -197,8 +197,6 @@ async function createContent(parameters: ContentParameters) {
                     "url":`${cms_article_path}${data.routeSegment}`
                 })
             });
-
-            await addURL.json();
             
             const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
                 method: "PATCH",
@@ -212,9 +210,10 @@ async function createContent(parameters: ContentParameters) {
                     "url":`${cms_article_path}${data.routeSegment}`
                 })
             });
-            
-            await updateTask.json();
 
+            // Wait for both requests to complete
+            await Promise.all([addURL, updateTask]);
+            
             const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
                 method: "PATCH",
                 headers: {
