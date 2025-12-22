@@ -186,21 +186,17 @@ async function createContent(parameters: ContentParameters) {
 
         if (data.routeSegment) {
             
-            try {
-                const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${cmpToken}`
-                    },
-                    body: JSON.stringify({
-                        "title": `${cmpTitle}`,
-                        "url":`${cms_article_path}${data.routeSegment}`
-                    })
-                });
-            } catch (error) {
-                throw new Error(`Error adding url: ${error instanceof Error ? error.message : String(error)}`);
-            }
+            const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${cmpToken}`
+                },
+                body: JSON.stringify({
+                    "title": `${cmpTitle}`,
+                    "url":`${cms_article_path}${data.routeSegment}`
+                })
+            });
             
             const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
                 method: "PATCH",
@@ -215,16 +211,16 @@ async function createContent(parameters: ContentParameters) {
                 })
             });
 
-            const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cmpToken}`
-                },
-                body: JSON.stringify({
-                    "is_completed":true
-                })
-            });
+            // const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
+            //     method: "PATCH",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "Authorization": `Bearer ${cmpToken}`
+            //     },
+            //     body: JSON.stringify({
+            //         "is_completed":true
+            //     })
+            // });
 
             
 
