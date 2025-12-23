@@ -13,12 +13,14 @@ interface ContentParameters {
     cms_container: string;
     cms_placeholder_image: string;
     cms_article_path: string;
+    cms_root_domain: string;
+
 }
 
 
 async function createContent(parameters: ContentParameters) {
 
-  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image, cms_article_path } = parameters; 
+  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image, cms_article_path, cms_root_domain } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -139,7 +141,7 @@ async function createContent(parameters: ContentParameters) {
                 let cmpMetaTitle = structuredContent?.latest_fields_version?.fields?.metaTitle[0]?.field_values[0]?.text_value ?? "";
                 let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
 
-                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, cms_container, cms_placeholder_image, cms_article_path);
+                await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, cms_container, cms_placeholder_image, cms_article_path, cms_root_domain);
             
                 return data;
             }
@@ -153,7 +155,7 @@ async function createContent(parameters: ContentParameters) {
 
 
     // create the cms entry
-    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string, cmpAuthor?: string, cms_container?: string, cms_placeholder_image?: string, cms_article_path?: string){
+    async function createCMSContent(cmpToken: string, cmsToken: string, cmpTitle: string, cmpHtml: string, cmpMetaTitle?: string, cmpMetaDescription?: string, cmpAuthor?: string, cms_container?: string, cms_placeholder_image?: string, cms_article_path?: string, cms_root_domain?: string){
        const response = await fetch(`https://api.cms.optimizely.com/preview3/experimental/content`, {
             method: "POST",
             headers: {
@@ -184,11 +186,19 @@ async function createContent(parameters: ContentParameters) {
                 }
             })
         }); 
-
+        
         const data = await response.json();
 
         if (data.routeSegment) {
-            
+
+            const previewToken = crypto
+                .createHash('sha256')
+                .update(`OptiPreview123:${data.key}:${data.version}`)
+                .digest('hex')
+                .substring(0, 16);
+                
+            const cmsContentUrl = `${cms_root_domain}/externalpreview/${data.routeSegment}/?ver=${data.version}&token=${previewToken}`;
+
             const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
                 method: "POST",
                 headers: {
@@ -197,7 +207,7 @@ async function createContent(parameters: ContentParameters) {
                 },
                 body: JSON.stringify({
                     "title": `${cmpTitle}`,
-                    "url":`${cms_article_path}${data.routeSegment}`
+                    "url":`${cmsContentUrl}`
                 })
             });
             
@@ -210,7 +220,7 @@ async function createContent(parameters: ContentParameters) {
                 body: JSON.stringify({
                     "title":`${cmpTitle}`,
                     "status":"Complete",
-                    "url":`${cms_article_path}${data.routeSegment}`
+                    "url":`${cmsContentUrl}`
                 })
             });
 
@@ -316,6 +326,12 @@ tool({
       name: "cms_article_path",
       type: ParameterType.String,
       description: "URL path for the link for the article.",
+      required: true,
+    },
+     {
+      name: "cms_root_domain",
+      type: ParameterType.String,
+      description: "Root domain for SaaS Site.",
       required: true,
     }
   ],
