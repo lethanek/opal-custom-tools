@@ -165,7 +165,7 @@ async function createContent(parameters: ContentParameters) {
                 "contentType": "ArticlePage",
                 "locale": "en",
                 "container": `${cms_container}`,
-                "status": "published",
+                "status": "draft",
                 "displayName": `${cmpTitle}`,
                 "properties": {
                     "Heading": `${cmpTitle}`,
@@ -176,6 +176,9 @@ async function createContent(parameters: ContentParameters) {
                         "GraphType": "article",
                         "MetaDescription": cmpMetaDescription || "",
                         "MetaTitle": cmpMetaTitle || ""
+                    },
+                    "PageAdminSettings": {
+                        "EnableExternalPreview": true
                     },
                     "PromoImage": `cms://content/${cms_placeholder_image}`
                 }
