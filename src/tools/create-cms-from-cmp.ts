@@ -200,6 +200,7 @@ async function createContent(parameters: ContentParameters) {
                 
             const cmsContentUrl = `${cms_root_domain}externalpreview${cms_article_path}${data.routeSegment}/?ver=${data.version}&token=${previewToken}`;
 
+            try {
             const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
                 method: "POST",
                 headers: {
@@ -214,6 +215,9 @@ async function createContent(parameters: ContentParameters) {
             
             await addURL.json();
 
+        } catch (error) {
+            throw new Error(`Failed to add URL to CMP: ${error instanceof Error ? error.message : String(error)}`);
+        }
             // const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
             //     method: "PATCH",
             //     headers: {
