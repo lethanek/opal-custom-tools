@@ -218,32 +218,34 @@ async function createContent(parameters: ContentParameters) {
         } catch (error) {
             throw new Error(`Failed to add URL to CMP: ${error instanceof Error ? error.message : String(error)}`);
         }
-            // const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
-            //     method: "PATCH",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": `Bearer ${cmpToken}`
-            //     },
-            //     body: JSON.stringify({
-            //         "title":`${cmpTitle}`,
-            //         "status":"Complete",
-            //         "url":`${cmsContentUrl}`
-            //     })
-            // });
-
-            // await updateTask.json();
             
-            // const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
-            //     method: "PATCH",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": `Bearer ${cmpToken}`
-            //     },
-            //     body: JSON.stringify({
-            //         "is_completed":true
-            //     })
-            // });
-            // await completeStep.json();
+        
+        const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${cmpToken}`
+            },
+            body: JSON.stringify({
+                "title":`${cmpTitle}`,
+                "status":"Complete",
+                "url":`${cmsContentUrl}`
+            })
+        });
+
+        await updateTask.json();
+        
+        const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${cmpToken}`
+            },
+            body: JSON.stringify({
+                "is_completed":true
+            })
+        });
+        await completeStep.json();
 
             
 
