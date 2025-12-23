@@ -197,7 +197,7 @@ async function createContent(parameters: ContentParameters) {
                 .digest('hex')
                 .substring(0, 16);
                 
-            const cmsContentUrl = `${cms_root_domain}/externalpreview/${data.routeSegment}/?ver=${data.version}&token=${previewToken}`;
+            const cmsContentUrl = `${cms_root_domain}externalpreview${cms_article_path}${data.routeSegment}/?ver=${data.version}&token=${previewToken}`;
 
             const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
                 method: "POST",
