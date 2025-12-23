@@ -214,32 +214,32 @@ async function createContent(parameters: ContentParameters) {
             
             await addURL.json();
 
-            const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cmpToken}`
-                },
-                body: JSON.stringify({
-                    "title":`${cmpTitle}`,
-                    "status":"Complete",
-                    "url":`${cmsContentUrl}`
-                })
-            });
+            // const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
+            //     method: "PATCH",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "Authorization": `Bearer ${cmpToken}`
+            //     },
+            //     body: JSON.stringify({
+            //         "title":`${cmpTitle}`,
+            //         "status":"Complete",
+            //         "url":`${cmsContentUrl}`
+            //     })
+            // });
 
-            await updateTask.json();
+            // await updateTask.json();
             
-            const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cmpToken}`
-                },
-                body: JSON.stringify({
-                    "is_completed":true
-                })
-            });
-            await completeStep.json();
+            // const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
+            //     method: "PATCH",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "Authorization": `Bearer ${cmpToken}`
+            //     },
+            //     body: JSON.stringify({
+            //         "is_completed":true
+            //     })
+            // });
+            // await completeStep.json();
 
             
 
