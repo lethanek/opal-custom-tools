@@ -14,13 +14,14 @@ interface ContentParameters {
     cms_placeholder_image: string;
     cms_article_path: string;
     cms_root_domain: string;
+    netlify_external_preview_token: string;
 
 }
 
 
 async function createContent(parameters: ContentParameters) {
 
-  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image, cms_article_path, cms_root_domain } = parameters; 
+  const { task_id, step_id, substep_id, cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret, cms_act_as, cms_container, cms_placeholder_image, cms_article_path, cms_root_domain, netlify_external_preview_token } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -193,7 +194,7 @@ async function createContent(parameters: ContentParameters) {
 
             const previewToken = crypto
                 .createHash('sha256')
-                .update(`OptiPreview123:${data.key}:${data.version}`)
+                .update(`${netlify_external_preview_token}:${data.key}:${data.version}`)
                 .digest('hex')
                 .substring(0, 16);
                 
@@ -332,6 +333,12 @@ tool({
       name: "cms_root_domain",
       type: ParameterType.String,
       description: "Root domain for SaaS Site.",
+      required: true,
+    },
+     {
+      name: "netlify_external_preview_token",
+      type: ParameterType.String,
+      description: "Token for Netlify external preview.",
       required: true,
     }
   ],
