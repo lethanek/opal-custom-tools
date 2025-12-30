@@ -28,7 +28,7 @@ import "./tools/create-cms-from-cmp";
 import "./tools/shenandoah-create-article";
 import "./tools/create-cms12-from-cmp";
 
-// import "./tools/api-call";
+import "./tools/api-call";
 // import "./tools/greeting";
 // import "./tools/rick-roll";
 // import "./tools/sqlite-query";
