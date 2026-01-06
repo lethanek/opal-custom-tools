@@ -91,13 +91,10 @@ async function createContent(parameters: ContentParameters) {
 
         const data = await response.json();
         
-        // Find the structured_content item
-        const structuredContent = data.data?.find((item: any) => item.type === "structured_content");
-        
-        if (structuredContent) {
+        if (data) {
     
-            cmpTitle = structuredContent.data[0].title;
-            cmpHtml = structuredContent.data[0].content.value;
+            cmpTitle = data.data[0].title;
+            cmpHtml = data.data[0].content.value;
 
             await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml);
             
