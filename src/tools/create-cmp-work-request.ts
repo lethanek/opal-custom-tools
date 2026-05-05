@@ -4,14 +4,12 @@ import crypto from "node:crypto";
 interface ContentParameters {
     cmp_client_id: string;
     cmp_client_secret: string;
-    cms_client_id: string;
-    cms_client_secret: string;
 }
 
 
 async function createWorkRequest(parameters: ContentParameters) {
 
-  const { cmp_client_id, cmp_client_secret, cms_client_id, cms_client_secret } = parameters; 
+  const { cmp_client_id, cmp_client_secret } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -92,12 +90,6 @@ tool({
       name: "cmp_client_secret",
       type: ParameterType.String,
       description: "CMP Client Secret",
-      required: true,
-    },
-     {
-      name: "cms_client_id",
-      type: ParameterType.String,
-      description: "CMS Client ID",
       required: true,
     }
   ],
