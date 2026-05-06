@@ -4,12 +4,14 @@ import crypto from "node:crypto";
 interface ContentParameters {
     cmp_client_id: string;
     cmp_client_secret: string;
+    wr_name: string;
+    wr_description: string;
 }
 
 
 async function createWorkRequest(parameters: ContentParameters) {
 
-  const { cmp_client_id, cmp_client_secret } = parameters; 
+  const { cmp_client_id, cmp_client_secret, wr_name, wr_description } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -41,7 +43,7 @@ async function createWorkRequest(parameters: ContentParameters) {
 
 //create the work request here
 
-    async function addWorkRequest(cmpToken: string){
+    async function addWorkRequest(cmpToken: string, wr_name: string){
        const response = await fetch("https://api.cmp.optimizely.com/v3/work-requests", {
             method: "POST",
             headers: {
@@ -54,7 +56,7 @@ async function createWorkRequest(parameters: ContentParameters) {
                     {
                         "type":"text",
                         "identifier":"title",
-                        "values":["Created in Opal Workflow"]}],
+                        "values":[`${wr_name}`]}],
                         "template_id":"7148a30956f345ee89e9395f550f9016"
                     })
         });
