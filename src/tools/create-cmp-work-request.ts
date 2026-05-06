@@ -7,12 +7,13 @@ interface ContentParameters {
     wr_name: string;
     wr_description: string;
     wr_startDate: string;
+    wr_sfdccampaign: string;
 }
 
 
 async function createWorkRequest(parameters: ContentParameters) {
 
-  const { cmp_client_id, cmp_client_secret, wr_name, wr_description, wr_startDate } = parameters; 
+  const { cmp_client_id, cmp_client_secret, wr_name, wr_description, wr_startDate, wr_sfdccampaign } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -44,7 +45,7 @@ async function createWorkRequest(parameters: ContentParameters) {
 
 //create the work request here
 
-    async function addWorkRequest(cmpToken: string, wr_name: string, wr_description: string, wr_startDate: string){
+    async function addWorkRequest(cmpToken: string, wr_name: string, wr_description: string, wr_startDate: string, wr_sfdccampaign: string){
        const response = await fetch("https://api.cmp.optimizely.com/v3/work-requests", {
             method: "POST",
             headers: {
@@ -68,6 +69,13 @@ async function createWorkRequest(parameters: ContentParameters) {
                         "identifier": "due_date",
                         "type": "date",
                         "values": [`${wr_startDate}T12:00:00Z`]
+                    },
+                    {
+                      "identifier": "69fb6d17d478f88d2e00f901",
+                      "type": "text",
+                      "values": [
+                        `https://orgfarm-b8e306d363-dev-ed.develop.lightning.force.com/lightning/r/Campaign/${wr_sfdccampaign}/view`
+                      ]
                     }
                 ],
                 "template_id": "7148a30956f345ee89e9395f550f9016"
@@ -75,9 +83,11 @@ async function createWorkRequest(parameters: ContentParameters) {
         });
 
         const data = await response.json();
+
+        
        
     }
-    await addWorkRequest(token, wr_name, wr_description, wr_startDate);
+    await addWorkRequest(token, wr_name, wr_description, wr_startDate, wr_sfdccampaign);
 
     
 
@@ -123,6 +133,12 @@ tool({
       name: "wr_startDate",
       type: ParameterType.String,
       description: "Campaign Start Date",
+      required: true,
+    },
+    {
+      name: "wr_sfdccampaign",
+      type: ParameterType.String,
+      description: "SFDC Campaign Link",
       required: true,
     }
   ],
