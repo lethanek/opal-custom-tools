@@ -64,7 +64,7 @@ async function createWorkRequest(parameters: ContentParameters) {
         const data = await response.json();
        
     }
-    await addWorkRequest(token);
+    await addWorkRequest(token, wr_name);
 
     
 
