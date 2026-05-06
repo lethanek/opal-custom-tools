@@ -13,7 +13,7 @@ interface ContentParameters {
 
 async function createWorkRequest(parameters: ContentParameters) {
 
-  const { cmp_client_id, cmp_client_secret, wr_name, wr_description, wr_startDate, wr_sfdccampaign } = parameters;
+  const { cmp_client_id, cmp_client_secret, wr_name, wr_description, wr_startDate, wr_sfdccampaign } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -45,7 +45,7 @@ async function createWorkRequest(parameters: ContentParameters) {
 
 //create the work request here
 
-    async function addWorkRequest(cmpToken: string, wr_name: string, wr_description: string, wr_startDate: string, wr_sfdccampaign: string): Promise<string> {
+    async function addWorkRequest(cmpToken: string, wr_name: string, wr_description: string, wr_startDate: string, wr_sfdccampaign: string){
        const response = await fetch("https://api.cmp.optimizely.com/v3/work-requests", {
             method: "POST",
             headers: {
@@ -83,15 +83,16 @@ async function createWorkRequest(parameters: ContentParameters) {
         });
 
         const data = await response.json();
-        return data.id;
-    }
-    const workRequestId = await addWorkRequest(token, wr_name, wr_description, wr_startDate, wr_sfdccampaign);
 
-  content = JSON.stringify({
-    status: "Work Request Created Successfully",
-    workRequestId: workRequestId,
-    salesforceCampaignId: wr_sfdccampaign
-  });
+        
+        
+       
+    }
+    await addWorkRequest(token, wr_name, wr_description, wr_startDate, wr_sfdccampaign);
+
+    
+
+  content = "Work Request Created Successfully";
 
   return {
     content
