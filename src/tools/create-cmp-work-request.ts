@@ -67,7 +67,7 @@ async function createWorkRequest(parameters: ContentParameters) {
                     {
                         "identifier": "due_date",
                         "type": "date",
-                        "values": [`${wr_startDate}T00:00:00Z`]
+                        "values": [`${wr_startDate}`]
                     }
                 ],
                 "template_id": "7148a30956f345ee89e9395f550f9016"
