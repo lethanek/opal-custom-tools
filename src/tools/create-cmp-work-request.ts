@@ -93,6 +93,18 @@ tool({
       type: ParameterType.String,
       description: "CMP Client Secret",
       required: true,
+    },
+    {
+      name: "wr_name",
+      type: ParameterType.String,
+      description: "Campaign name",
+      required: true,
+    },
+    {
+      name: "wr_description",
+      type: ParameterType.String,
+      description: "Campaign description",
+      required: true,
     }
   ],
 })(createWorkRequest);
