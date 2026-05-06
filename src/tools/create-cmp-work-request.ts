@@ -63,6 +63,11 @@ async function createWorkRequest(parameters: ContentParameters) {
                         "identifier": "short_description",
                         "type": "text_area",
                         "values": [`${wr_description}`]
+                    },
+                    {
+                        "identifier": "due_date",
+                        "type": "date",
+                        "values": [`${wr_startDate}`]
                     }
                 ],
                 "template_id": "7148a30956f345ee89e9395f550f9016"
