@@ -6,12 +6,13 @@ interface ContentParameters {
     cmp_client_secret: string;
     wr_name: string;
     wr_description: string;
+    wr_startDate: string;
 }
 
 
 async function createWorkRequest(parameters: ContentParameters) {
 
-  const { cmp_client_id, cmp_client_secret, wr_name, wr_description } = parameters; 
+  const { cmp_client_id, cmp_client_secret, wr_name, wr_description, wr_startDate } = parameters; 
   let content: string;
 
     // get the cmp token
@@ -43,7 +44,7 @@ async function createWorkRequest(parameters: ContentParameters) {
 
 //create the work request here
 
-    async function addWorkRequest(cmpToken: string, wr_name: string, wr_description: string){
+    async function addWorkRequest(cmpToken: string, wr_name: string, wr_description: string, wr_startDate: string){
        const response = await fetch("https://api.cmp.optimizely.com/v3/work-requests", {
             method: "POST",
             headers: {
@@ -71,7 +72,7 @@ async function createWorkRequest(parameters: ContentParameters) {
         const data = await response.json();
        
     }
-    await addWorkRequest(token, wr_name, wr_description);
+    await addWorkRequest(token, wr_name, wr_description, wr_startDate);
 
     
 
@@ -111,6 +112,12 @@ tool({
       name: "wr_description",
       type: ParameterType.String,
       description: "Campaign description",
+      required: true,
+    },
+    {
+      name: "wr_startDate",
+      type: ParameterType.String,
+      description: "Campaign Start Date",
       required: true,
     }
   ],
