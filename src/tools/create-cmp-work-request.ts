@@ -87,7 +87,11 @@ async function createWorkRequest(parameters: ContentParameters) {
     }
     const workRequestId = await addWorkRequest(token, wr_name, wr_description, wr_startDate, wr_sfdccampaign);
 
-  content = `Work Request Created Successfully. ID: ${workRequestId}`;
+  content = JSON.stringify({
+    status: "Work Request Created Successfully",
+    workRequestId: workRequestId,
+    salesforceCampaignId: wr_sfdccampaign
+  });
 
   return {
     content
