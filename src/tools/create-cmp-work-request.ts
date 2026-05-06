@@ -43,7 +43,7 @@ async function createWorkRequest(parameters: ContentParameters) {
 
 //create the work request here
 
-    async function addWorkRequest(cmpToken: string, wr_name: string){
+    async function addWorkRequest(cmpToken: string, wr_name: string, wr_description: string){
        const response = await fetch("https://api.cmp.optimizely.com/v3/work-requests", {
             method: "POST",
             headers: {
@@ -52,19 +52,26 @@ async function createWorkRequest(parameters: ContentParameters) {
 
             },
             body: JSON.stringify({
-                "form_fields":[
+                "form_fields": [
                     {
-                        "type":"text",
-                        "identifier":"title",
-                        "values":[`${wr_name}`]}],
-                        "template_id":"7148a30956f345ee89e9395f550f9016"
-                    })
+                        "type": "text",
+                        "identifier": "title",
+                        "values": [`${wr_name}`]
+                    },
+                    {
+                        "identifier": "short_description",
+                        "type": "text_area",
+                        "values": [`${wr_description}`]
+                    }
+                ],
+                "template_id": "7148a30956f345ee89e9395f550f9016"
+            })
         });
 
         const data = await response.json();
        
     }
-    await addWorkRequest(token, wr_name);
+    await addWorkRequest(token, wr_name, wr_description);
 
     
 
