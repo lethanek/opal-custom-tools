@@ -190,6 +190,9 @@ async function createContent(parameters: ContentParameters) {
         }); 
         
         const data = await response.json();
+        if (!data.routeSegment) {
+            throw new Error(`CMS content creation failed. Status: ${response.status}. Response: ${JSON.stringify(data)}`);
+        }
 
         if (data.routeSegment) {
 
