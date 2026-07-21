@@ -193,68 +193,68 @@ async function createContent(parameters: ContentParameters) {
         
         const data = await response.json();
 
-        if (data.routeSegment) {
+        // if (data.routeSegment) {
 
-            const previewToken = crypto
-                .createHash('sha256')
-                .update(`${netlify_external_preview_token}:${data.key}:${data.version}`)
-                .digest('hex')
-                .substring(0, 16);
+        //     const previewToken = crypto
+        //         .createHash('sha256')
+        //         .update(`${netlify_external_preview_token}:${data.key}:${data.version}`)
+        //         .digest('hex')
+        //         .substring(0, 16);
                 
-            const cmsContentUrl = `${cms_root_domain}externalpreview${cms_article_path}${data.routeSegment}/?ver=${data.version}&token=${previewToken}`;
+        //     const cmsContentUrl = `${cms_root_domain}externalpreview${cms_article_path}${data.routeSegment}/?ver=${data.version}&token=${previewToken}`;
 
-            try {
-                const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${cmpToken}`
-                    },
-                    body: JSON.stringify({
-                        "title": `${cmpTitle}`,
-                        "url":`${cmsContentUrl}`
-                    })
-                });
+        //     try {
+        //         const addURL = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/urls`, {
+        //             method: "POST",
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //                 "Authorization": `Bearer ${cmpToken}`
+        //             },
+        //             body: JSON.stringify({
+        //                 "title": `${cmpTitle}`,
+        //                 "url":`${cmsContentUrl}`
+        //             })
+        //         });
                 
-                await addURL.json();
+        //         await addURL.json();
 
-            } catch (error) {
-                throw new Error(`Failed to add URL to CMP: ${error instanceof Error ? error.message : String(error)}`);
-            }
+        //     } catch (error) {
+        //         throw new Error(`Failed to add URL to CMP: ${error instanceof Error ? error.message : String(error)}`);
+        //     }
             
         
-        const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${cmpToken}`
-            },
-            body: JSON.stringify({
-                "title":`${cmpTitle}`,
-                "status":"Complete",
-                "url":`${cmsContentUrl}`
-            })
-        });
+        // const updateTask = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}/external-work`, {
+        //     method: "PATCH",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Authorization": `Bearer ${cmpToken}`
+        //     },
+        //     body: JSON.stringify({
+        //         "title":`${cmpTitle}`,
+        //         "status":"Complete",
+        //         "url":`${cmsContentUrl}`
+        //     })
+        // });
 
-        await updateTask.json();
+        // await updateTask.json();
         
-        const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${cmpToken}`
-            },
-            body: JSON.stringify({
-                "is_completed":true
-            })
-        });
-        await completeStep.json();
+        // const completeStep = await fetch(`https://api.cmp.optimizely.com/v3/tasks/${task_id}/steps/${step_id}/sub-steps/${substep_id}`, {
+        //     method: "PATCH",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Authorization": `Bearer ${cmpToken}`
+        //     },
+        //     body: JSON.stringify({
+        //         "is_completed":true
+        //     })
+        // });
+        // await completeStep.json();
 
             
 
-        } else {
-            throw new Error("didn't return routeSegment");
-        }
+        // } else {
+        //     throw new Error("didn't return routeSegment");
+        // }
     }
     //await getCMPContent(cmpToken!);
 
