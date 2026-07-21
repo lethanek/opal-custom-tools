@@ -137,18 +137,13 @@ async function createContent(parameters: ContentParameters) {
 
             if(structuredContent){
                 // THIS IS USING THE OLDER DEFAULT OMNUCHANNEL EDITOR
-                // let cmpTitle = structuredContent.latest_fields_version.fields.title[0].field_values[0].text_value;
-                // let cmpHtml = structuredContent.latest_fields_version.fields.body[0].field_values[0].rich_text_value;
-                // let cmpAuthor = structuredContent?.latest_fields_version?.fields?.author?.[0]?.field_values?.[0]?.text_value ?? "Optimizely Author";                
-                // let cmpMetaTitle = structuredContent?.latest_fields_version?.fields?.metaTitle[0]?.field_values[0]?.text_value ?? "";
-                // let cmpMetaDescription = structuredContent?.latest_fields_version?.fields?.metaDescription[0]?.field_values[0]?.text_value ?? "";
+                const fields = structuredContent?.latest_fields_version?.fields;
+                const cmpTitle = fields?.title?.[0]?.field_values?.[0]?.text_value ?? "";
+                const cmpHtml = fields?.body?.[0]?.field_values?.[0]?.rich_text_value ?? "";
+                const cmpAuthor = fields?.author?.[0]?.field_values?.[0]?.text_value ?? "";
+                const cmpMetaTitle = fields?.metaTitle?.[0]?.field_values?.[0]?.text_value ?? "";
+                const cmpMetaDescription = fields?.metaDescription?.[0]?.field_values?.[0]?.text_value ?? "";
 
-                //THIS IS THE NEWER DEFAULT EDITOR
-                let cmpTitle = "title";
-                let cmpHtml = "<h1>Hello World</h1>"
-                let cmpAuthor = "danny o"               
-                let cmpMetaTitle = "meta title"
-                let cmpMetaDescription = "meta desc"
 
                 await createCMSContent(cmpToken!, cmsToken!, cmpTitle, cmpHtml, cmpMetaTitle, cmpMetaDescription, cmpAuthor, cms_container, cms_placeholder_image, cms_article_path, cms_root_domain);
             
